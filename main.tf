@@ -1,0 +1,60 @@
+module "provider" {
+  source                  = "./provider/cloud"
+  do_token                = "${var.do_token}"
+  do_user_name            = "${var.do_user_name}"
+  do_ip_access            = "${var.do_ip_access}"
+  do_email                = "${var.do_email}"
+  do_ssh_key_name         = "${var.do_ssh_key_name}"
+  do_domain               = "${var.do_domain}"
+  do_server_count         = "${var.do_server_count}"
+  do_server_type          = "${var.do_server_type}"
+  do_datacenter           = "${var.do_datacenter}"
+  do_hostname_format      = "${var.do_hostname_format}"
+  do_image                = "${var.do_image}"
+  do_keep_disk            = "${var.do_keep_disk}"
+  do_backup_window        = "${var.do_backup_window}"
+  do_iso_image            = "${var.do_iso_image}"
+  do_rescue               = "${var.do_rescue}"
+  do_apt_install_packages = "${var.do_apt_install_packages}"
+  zeit_token              = "${var.zeit_token}"
+  do_region               = "${var.do_region}"
+  do_droplet_size         = "${var.do_droplet_size}"
+  do_hostnames            = "${var.do_hostnames}"
+}
+
+# module "rancher" {
+#    source                       = "services/rancher"
+#    connections                  = "${module.provider.public_ips}"
+#    count                        = "${var.do_server_count}"
+#    ssh_key_name                 = "${var.do_ssh_key_name}"
+#    user                         = "${var.do_user_name}"
+#    hostname_format              = "${var.do_hostname_format}"
+#    domain                       = "${var.do_domain}"
+#    letsencrypt_mode             = "${var.letsencrypt_mode}"
+#    email                        = "${var.do_email}"
+#    rancher_password             = "${var.rancher_password}"
+#    rancher_cluster              = "${var.rancher_cluster}"
+#    apt_install_master           = "${var.do_apt_install_master}"
+#    zeit_token                   = "${var.zeit_token}"
+#    do_domain                    = "${var.do_domain}"
+#    rancher_sub_domain           = "${var.rancher_sub_domain}"
+#    hostnames                    = "${module.provider.hostnames}"
+# }
+
+# module "firewall" {
+#   source                        = "./services/firewall"
+#   connections                   = "${module.provider.public_ips}"
+#   count                         = "${var.do_server_count}"
+#   ssh_key_name                  = "${var.do_ssh_key_name}"
+#   user                          = "${var.do_user_name}"
+#   ip_access                     = "${var.do_ip_access}"
+# }
+
+module "dns" {
+  source                        = "./services/dns"
+  connections                   = "${module.provider.public_ips}"
+  zeit_token                   = "${var.zeit_token}"
+  do_domain                    = "${var.do_domain}"
+  ssh_key_name         = "${var.do_ssh_key_name}"
+  user                          = "${var.do_user_name}"
+}
