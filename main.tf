@@ -22,33 +22,33 @@ module "provider" {
   do_hostnames            = "${var.do_hostnames}"
 }
 
-# module "rancher" {
-#    source                       = "services/rancher"
-#    connections                  = "${module.provider.public_ips}"
-#    count                        = "${var.do_server_count}"
-#    ssh_key_name                 = "${var.do_ssh_key_name}"
-#    user                         = "${var.do_user_name}"
-#    hostname_format              = "${var.do_hostname_format}"
-#    domain                       = "${var.do_domain}"
-#    letsencrypt_mode             = "${var.letsencrypt_mode}"
-#    email                        = "${var.do_email}"
-#    rancher_password             = "${var.rancher_password}"
-#    rancher_cluster              = "${var.rancher_cluster}"
-#    apt_install_master           = "${var.do_apt_install_master}"
-#    zeit_token                   = "${var.zeit_token}"
-#    do_domain                    = "${var.do_domain}"
-#    rancher_sub_domain           = "${var.rancher_sub_domain}"
-#    hostnames                    = "${module.provider.hostnames}"
-# }
+module "rancher" {
+   source                       = "services/rancher"
+   connections                  = "${module.provider.public_ips}"
+   count                        = "${var.do_server_count}"
+   ssh_key_name                 = "${var.do_ssh_key_name}"
+   user                         = "${var.do_user_name}"
+   hostname_format              = "${var.do_hostname_format}"
+   domain                       = "${var.do_domain}"
+   letsencrypt_mode             = "${var.letsencrypt_mode}"
+   email                        = "${var.do_email}"
+   rancher_password             = "${var.rancher_password}"
+   rancher_cluster              = "${var.rancher_cluster}"
+   apt_install_master           = "${var.do_apt_install_master}"
+   zeit_token                   = "${var.zeit_token}"
+   do_domain                    = "${var.do_domain}"
+   rancher_sub_domain           = "${var.rancher_sub_domain}"
+   hostnames                    = "${module.provider.hostnames}"
+}
 
-# module "firewall" {
-#   source                        = "./services/firewall"
-#   connections                   = "${module.provider.public_ips}"
-#   count                         = "${var.do_server_count}"
-#   ssh_key_name                  = "${var.do_ssh_key_name}"
-#   user                          = "${var.do_user_name}"
-#   ip_access                     = "${var.do_ip_access}"
-# }
+module "firewall" {
+  source                        = "./services/firewall"
+  connections                   = "${module.provider.public_ips}"
+  count                         = "${var.do_server_count}"
+  ssh_key_name                  = "${var.do_ssh_key_name}"
+  user                          = "${var.do_user_name}"
+  ip_access                     = "${var.do_ip_access}"
+}
 
 module "dns" {
   source                        = "./services/dns"
